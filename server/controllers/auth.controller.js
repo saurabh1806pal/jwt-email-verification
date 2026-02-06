@@ -162,42 +162,6 @@ exports.sendVerifyOtp = async (req, res) => {
   }
 };
 
-// exports.verifyAccount = async (req, res) => {
-//   const { email, otp } = req.body;
-//   if (!email || !otp) {
-//     return res
-//       .status(400)
-//       .json({ message: "Email and OTP are required", success: false });
-//   }
-//   try {
-//     const user = await User.findOne({ email });
-//     if (!user) {
-//       return res
-//         .status(400)
-//         .json({ message: "User not found", success: false });
-//     }
-//     if (user.isAccountVerified) {
-//       return res
-//         .status(400)
-//         .json({ message: "User is already verified", success: false });
-//     }
-//     if (user.verifyOtp !== otp || user.verifyOtpExpires < Date.now()) {
-//       return res
-//         .status(400)
-//         .json({ message: "Invalid or expired OTP", success: false });
-//     }
-//     user.isAccountVerified = true;
-//     user.verifyOtp = undefined;
-//     user.verifyOtpExpires = undefined;
-//     await user.save();
-//     return res
-//       .status(200)
-//       .json({ message: "Account verified successfully", success: true });
-//   } catch (error) {
-//     return res.status(400).json({ message: error.message, success: false });
-//   }
-// };
-
 exports.verifyAccount = async (req, res) => {
   const email = req.user.email; // ✅ from JWT
   const { otp } = req.body; // ✅ only OTP from body
@@ -318,13 +282,13 @@ exports.resetPassword = async (req, res) => {
         .status(400)
         .json({ message: "User not found", success: false });
     }
-    console.log("==== OTP DEBUG START ====");
-    console.log("Email from JWT:", email);
-    console.log("OTP received (req.body):", otp, typeof otp);
-    console.log("OTP saved (DB):", user.resetOtp, typeof user.verifyOtp);
-    console.log("OTP expires at:", user.resetOtpExpires);
-    console.log("Current time:", Date.now());
-    console.log("==== OTP DEBUG END ====");
+    // console.log("==== OTP DEBUG START ====");
+    // console.log("Email from JWT:", email);
+    // console.log("OTP received (req.body):", otp, typeof otp);
+    // console.log("OTP saved (DB):", user.resetOtp, typeof user.resetOtp);
+    // console.log("OTP expires at:", user.resetOtpExpires);
+    // console.log("Current time:", Date.now());
+    // console.log("==== OTP DEBUG END ====");
 
     if (String(user.resetOtp) !== otp || user.resetOtpExpires < Date.now()) {
       return res
